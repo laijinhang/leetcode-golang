@@ -1,14 +1,12 @@
 package main
 
 func minimumTotal(triangle [][]int) int {
-	minNum := make([]int, len(triangle))
-
-}
-
-func minnum(t [][]int, minNum []int, i int) {
-	if i == 0 {
-		minNum[i] = t[0][0]
+	res := []int{triangle[0][0]}
+	for i := 1;i < len(triangle);i++ {
+		for j := 0;j < len(triangle[i]);j++ {
+			if j == 0 {
+				//res[0] =
+			}
+		}
 	}
-	minnum(t, minNum, i - 1)
-
 }
