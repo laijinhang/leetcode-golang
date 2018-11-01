@@ -1,14 +1,12 @@
 package main
 
 import (
-	"sort"
 	"fmt"
+	"math/rand"
 )
 
 func main() {
-	a := []int{1,1,4,2}
-	b := a
-	a = append(a, 1)
-	sort.Ints(a)
-	fmt.Println(a, b)
+	for i := 0;i < 10;i++ {
+		fmt.Println(rand.Intn(2)) // => 134020434
+	}
 }
