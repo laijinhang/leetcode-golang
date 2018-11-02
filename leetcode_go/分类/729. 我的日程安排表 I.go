@@ -22,7 +22,6 @@ func (this *MyCalendar) Book(start int, end int) bool {
 			break
 		}
 	}
-	math.Min
 	if flag {
 		this.val = append(this.val, struct{ s, e int }{s: start, e: end})
 	}
