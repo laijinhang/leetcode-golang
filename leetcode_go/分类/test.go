@@ -1,12 +1,9 @@
 package main
 
-import (
-	"fmt"
-	"math/rand"
-)
+import "fmt"
 
 func main() {
-	for i := 0;i < 10;i++ {
-		fmt.Println(rand.Intn(2)) // => 134020434
-	}
+	a, b := 1, 2
+	a, b = a + b, a + b
+	fmt.Println(a, b)
 }
