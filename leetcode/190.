@@ -1,0 +1,31 @@
+[颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
+### 解题思路
+1、将二进制值 转为 二进制字符串
+2、将二进制字符串旋转
+3、末尾补零到32位
+4、将二进制字符串转为值(因为在测试中，用strconv.FormatUint转的话，值变了，所以就自己写算法进行转换)
+
+### 代码
+
+```golang
+func reverseBits(num uint32) uint32 {
+	s := []byte(strconv.FormatUint(uint64(num), 2))
+	for i := 0;i < len(s)/2;i++ {
+		s[i], s[len(s)-i-1] = s[len(s)-i-1], s[i]
+	}
+    z := []byte{}
+    for i := len(s);i <= 32;i++ {
+        z = append(z, '0')
+    }
+	s = append(s, z...)
+
+    num = 0
+	for i := 0;i < 32;i++ {
+		num *= 2
+		if s[i] == '1' {
+			num += 1
+		}
+	}
+	return num
+}
+```
