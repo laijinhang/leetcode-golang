@@ -1,0 +1,31 @@
+[二叉搜索树的范围和](https://leetcode-cn.com/problems/range-sum-of-bst/)
+### 解题思路
+遍历二叉搜索树，求出所有节点在[L,R]之间的值
+优化：
+1、当前节点值小于L，说明该节点的左子树，会在[L,R]的左边，则不进行遍历该节点的左子树
+2、当前节点值大于R，说明该节点的右子树，会在[L,R]的右边，则不进行遍历该节点的右子树
+
+### 代码
+
+```golang
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func rangeSumBST(root *TreeNode, L int, R int) int {
+    if root == nil {
+        return 0
+    }
+    if root.Val < L {
+        return rangeSumBST(root.Right, L, R)
+    }
+    if root.Val > R {
+        return rangeSumBST(root.Left, L, R)
+    }
+    return root.Val + rangeSumBST(root.Right, L, R) + rangeSumBST(root.Left, L, R)
+}
+```
