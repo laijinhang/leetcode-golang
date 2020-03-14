@@ -1,0 +1,123 @@
+[单词频率](https://leetcode-cn.com/problems/words-frequency-lcci/)
+
+针对这个问题，比较合适的两种解决方案：
+1. 压缩前缀树
+2. 哈希
+
+两者之间的比较：
+1. 空间复杂度：前者 < 后者
+2. 时间复杂度：前者 > 后者（两者之间的时间复杂度很接近）
+3. 代码实现难度：前者 > 后者
+
+第一种：时间复杂度最坏情况：树的高度 + 横向搜索，空间复杂度最坏情况：n
+第二种：时间复杂度最坏情况：1，空间复杂度最坏情况：n
+
+当然，不止这两种解决方案了，不过这两者最经典的方案了
+# 1、压缩前缀树实现
+AC代码
+```golang
+type WordsFrequency struct {
+    n node
+}
+
+type node struct {
+    str string          // 前缀字符串
+    num int             
+    childNode []*node   // 该节点的所有子节点
+}
+
+func Constructor(book []string) WordsFrequency {
+    wf := WordsFrequency{}
+    for i := 0;i < len(book);i++ {
+        wf.n.Insert(book[i])
+    }
+    return wf
+}
+
+func (this *WordsFrequency) Get(word string) int {
+    return this.n.Search(word)
+}
+
+func (t *node) Insert(str string) {
+    if len(t.childNode) == 0 {
+        t.childNode = append(t.childNode, &node{str:str, num:1})
+    } else {
+        for i := 0;i < len(t.childNode);i++ {
+            // 可以挂载到这个节点的 子节点为 i 的节点上
+            if str[0] == t.childNode[i].str[0] {
+                // 寻找公共最长前缀
+                j := 0
+                for ; j < len(str) && j < len(t.childNode[i].str) && str[j] == t.childNode[i].str[j]; j++ {
+                }
+                
+                if j < len(str) && j < len(t.childNode[i].str) {
+                    tempN := &node{str:str[:j]}
+
+                    t.childNode[i].str = t.childNode[i].str[j:]
+                    tempN.childNode = append(tempN.childNode, t.childNode[i])
+                    tempN.childNode = append(tempN.childNode, &node{str:str[j:],num:1})
+
+                    t.childNode[i] = tempN
+                } else if len(str) == len(t.childNode[i].str) && len(str) == j {
+                    t.childNode[i].num++ 
+                } else if len(str) > len(t.childNode[i].str) {
+                    t.childNode[i].Insert(str[j:])
+                } else {
+                    tempN := &node{str:str, num:1}
+                    tempN.childNode = append(tempN.childNode, t.childNode[i])
+                    t.childNode[i].str = t.childNode[i].str[len(str):]
+                    t.childNode[i] = tempN
+                }
+                return
+            }
+        }
+        // 挂载到这个节点上
+        t.childNode = append(t.childNode, &node{str:str, num:1})
+    }
+}
+
+func (t *node) Search(str string) int {
+    for i := 0;i < len(t.childNode);i++ {
+        if t.childNode[i].str[0] == str[0] {
+            switch {
+            case len(t.childNode[i].str) > len(str):
+                return 0
+            case len(t.childNode[i].str) == len(str):
+                if t.childNode[i].str == str {
+                    return t.childNode[i].num
+                }
+                return 0
+            case len(t.childNode[i].str) < len(str):
+                if t.childNode[i].str == str[:len(t.childNode[i].str)] {
+                    return t.childNode[i].Search(str[len(t.childNode[i].str):])
+                }
+                return 0
+            }
+        }
+    }
+    return 0
+}
+```
+# 2、哈希
+AC代码
+```golang
+type WordsFrequency struct {
+    word map[string]int
+}
+
+
+func Constructor(book []string) WordsFrequency {
+    wf := WordsFrequency{
+        word: make(map[string]int),
+    }
+    for i := 0;i < len(book);i++ {
+        wf.word[book[i]]++
+    }
+    return wf
+}
+
+
+func (this *WordsFrequency) Get(word string) int {
+    return this.word[word]
+}
+```
