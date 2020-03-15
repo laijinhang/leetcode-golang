@@ -1,0 +1,25 @@
+[5356. 矩阵中的幸运数](https://leetcode-cn.com/problems/lucky-numbers-in-a-matrix/)
+```golang
+func luckyNumbers (matrix [][]int) []int {
+    res := []int{}
+    for i := 0;i < len(matrix);i++ {
+        rowMin :=  0
+        // 找出每行最小值下标
+        for j := 1;j < len(matrix[i]);j++ {
+            if matrix[i][rowMin] > matrix[i][j] {
+                rowMin = j
+            }
+        }
+        // 判断该行最小值在列是否为最大值
+        for j := 0;j < len(matrix);j++ {
+            if matrix[j][rowMin] > matrix[i][rowMin] {
+                break
+            }
+            if j == len(matrix) - 1 {
+                res = append(res, matrix[i][rowMin])
+            }
+        }
+    }
+    return res
+}
+```
