@@ -1,0 +1,46 @@
+[5357. 设计一个支持增量操作的栈](https://leetcode-cn.com/problems/design-a-stack-with-increment-operation/)
+```golang
+type CustomStack struct {
+    stack []int
+    useLen int
+}
+
+
+func Constructor(maxSize int) CustomStack {
+    return CustomStack{stack:make([]int, maxSize)}
+}
+
+
+func (this *CustomStack) Push(x int)  {
+    if this.useLen == len(this.stack) {
+        return
+    }
+    this.stack[this.useLen] = x
+    this.useLen++
+}
+
+
+func (this *CustomStack) Pop() int {
+    if this.useLen <= 0 {
+        return -1
+    }
+    this.useLen--
+    return this.stack[this.useLen]
+}
+
+
+func (this *CustomStack) Increment(k int, val int)  {
+    for i := 0;i < k && i < this.useLen;i++ {
+        this.stack[i] += val
+    }
+}
+
+
+/**
+ * Your CustomStack object will be instantiated and called as such:
+ * obj := Constructor(maxSize);
+ * obj.Push(x);
+ * param_2 := obj.Pop();
+ * obj.Increment(k,val);
+ */
+ ```
