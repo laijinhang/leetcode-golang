@@ -1,0 +1,35 @@
+[264. 丑数 II](https://leetcode-cn.com/problems/ugly-number-ii/)
+DP解法：
+1. dps[i] = min(dps[i2] * 2, dps[i3] * 3, dps[i5] * 5)
+2. 下标因子加一，要避免重复的情况
+
+```golang
+func nthUglyNumber(n int) int {
+    i2, i3, i5 := 0, 0, 0
+    dps := make([]int, n)
+    dps[0] = 1
+    for i := 1;i < n;i++ {
+        dps[i] = min(dps[i2] * 2, dps[i3] * 3, dps[i5] * 5)
+        if dps[i] == dps[i2] * 2{
+            i2++
+        }
+        if dps[i] == dps[i3] * 3 {
+            i3++
+        }
+        if dps[i] == dps[i5] * 5 {
+            i5++
+        }
+    }
+    return dps[n-1]
+}
+
+func min(a, b, c int) int {
+    if a <= b && a <= c {
+        return a
+    }
+    if b <= a && b <= c {
+        return b
+    }
+    return c
+}
+```
