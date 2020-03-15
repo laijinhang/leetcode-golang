@@ -1,0 +1,38 @@
+[5179. 将二叉搜索树变平衡](https://leetcode-cn.com/problems/balance-a-binary-search-tree/)
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func balanceBST(root *TreeNode) *TreeNode {
+    arr := []int{}
+    // 1、取出二叉搜索树的所有值
+    Search(root, &arr)  
+    // 2、构造AVL
+    return CreateAVLTree(arr)    
+}
+
+func CreateAVLTree(arr []int) *TreeNode {
+    if len(arr) == 0 {
+        return nil
+    }
+    // 取中位数
+    node := TreeNode{Val:arr[len(arr)/2]}
+    node.Left = CreateAVLTree(arr[:len(arr)/2])
+    node.Right = CreateAVLTree(arr[len(arr)/2+1:])
+    return &node
+}
+
+func Search(root *TreeNode, arr *[]int) {
+    if root == nil {
+        return
+    }
+    Search(root.Left, arr)
+    *arr = append(*arr, root.Val)
+    Search(root.Right, arr)
+}
+```
