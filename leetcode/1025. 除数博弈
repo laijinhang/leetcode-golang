@@ -1,0 +1,7 @@
+[1025. 除数博弈](https://leetcode-cn.com/problems/divisor-game/)
+归纳法
+```go
+func divisorGame(N int) bool {
+    return N % 2 == 0
+}
+```
