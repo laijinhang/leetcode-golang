@@ -1,0 +1,39 @@
+[用两个栈实现队列](https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/)
+```go
+type CQueue struct {
+    stack1 []int
+    stack2 []int
+}
+
+func Constructor() CQueue {
+    return CQueue{}
+}
+
+func (this *CQueue) AppendTail(value int)  {
+    this.stack1 = append(this.stack1, value)
+}
+
+func (this *CQueue) DeleteHead() int {
+    if len(this.stack1) == 0 {
+        return -1
+    }
+    // stack1 -> stack2
+    this.stack2 = make([]int, len(this.stack1))
+    for i, j := len(this.stack1) - 1, 0;i >= 0;i, j = i - 1, j + 1 {
+        this.stack2[j] = this.stack1[i]
+    }
+    // stack2 -> stack1
+    for i, j := len(this.stack2) - 2, 0;i >= 0;i, j = i - 1, j + 1 {
+        this.stack1[j] = this.stack2[i]
+    }
+    this.stack1 = this.stack1[:len(this.stack1)-1]
+    return this.stack2[len(this.stack2)-1]
+}
+
+/**
+ * Your CQueue object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.AppendTail(value);
+ * param_2 := obj.DeleteHead();
+ */
+```
