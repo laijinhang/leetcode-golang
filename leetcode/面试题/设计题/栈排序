@@ -1,0 +1,55 @@
+[栈排序](https://leetcode-cn.com/problems/sort-of-stacks-lcci/)
+
+关于这个问题，我一开始的时候把问题分析成 只要每次读取的是最小的就可以了，也就是获取栈最小值操作时，把栈中最小的放到栈顶，因此导致了我两次错误提交，但实际上，这个当把一个值放入栈中，就需要对栈进行调整，让这个栈时刻保持从栈顶到栈底按从小到大，因为当进行多次pop操作，我原先的和第二个得到的结果是不一样
+
+算法核心：
+1. 插入值：如果值 大于 栈顶，将栈顶值取出放入辅助栈，重复，直到值 小于或等于栈顶，此时将值入栈，之后将辅助栈按栈取值放入栈中
+2. 获取最小值：如果栈为空，返回-1；不为空，则返回栈顶值
+
+```go
+type SortedStack struct {
+    stack []int
+    tempStack []int
+}
+
+func Constructor() SortedStack {
+    return SortedStack{}
+}
+
+func (this *SortedStack) Push(val int)  {
+    this.tempStack = []int{}
+    for ;len(this.stack) != 0 && val > this.stack[len(this.stack)-1];this.stack = this.stack[:len(this.stack)-1] {
+        this.tempStack = append(this.tempStack, this.stack[len(this.stack)-1])
+    } 
+    this.stack = append(this.stack, val)
+    for ;len(this.tempStack) != 0;this.tempStack = this.tempStack[:len(this.tempStack)-1] {
+        this.stack = append(this.stack, this.tempStack[len(this.tempStack)-1])
+    }
+}
+
+func (this *SortedStack) Pop()  {
+    if len(this.stack) > 0 {
+        this.stack = this.stack[:len(this.stack)-1]
+    }
+}
+
+func (this *SortedStack) Peek() int {
+    if len(this.stack) == 0 {
+        return -1
+    }
+    return this.stack[len(this.stack)-1]
+}
+
+func (this *SortedStack) IsEmpty() bool {
+    return len(this.stack) == 0
+}
+
+/**
+ * Your SortedStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(val);
+ * obj.Pop();
+ * param_3 := obj.Peek();
+ * param_4 := obj.IsEmpty();
+ */
+```
