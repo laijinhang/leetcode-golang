@@ -1,0 +1,13 @@
+[排序数组](https://leetcode-cn.com/problems/sort-an-array/)
+
+```go
+
+func sortArray(nums []int)int {
+
+    sort.Ints(nums)
+
+    return nums
+
+}
+
+```
