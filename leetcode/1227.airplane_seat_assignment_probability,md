@@ -1,0 +1,14 @@
+[飞机座位分配概率](https://leetcode-cn.com/problems/airplane-seat-assignment-probability/)
+
+```golang
+func nthPersonGetsNthSeat(n int) float64 {
+    return dp(n)
+}
+
+func dp(n int) float64 {
+    if n <= 1 {
+        return 1
+    }
+    return 1.0 / float64(n) + float64(n-2.0) / float64(n) * dp(n-1)
+}
+```
