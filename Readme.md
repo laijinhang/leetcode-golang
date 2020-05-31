@@ -1,6 +1,6 @@
 # LeetCode
 
-![](https://img.shields.io/badge/Language-Go-%2300ADD8)
+![Language-Go](https://img.shields.io/badge/Language-Go-%2300ADD8)
 ---
 
 ## 数据结构
