@@ -1,0 +1,30 @@
+[链表组件](https://leetcode-cn.com/problems/linked-list-components/)
+
+```golang
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func numComponents(head *ListNode, G []int) int {
+    gFlag := false  // true表示当前链表节点的值可以与组件进行匹配
+    gM := make(map[int]bool)
+    num := 0
+
+    for i := 0;i < len(G);i++ {
+        gM[G[i]] = true
+    }
+
+    for node := head;node != nil;node = node.Next {
+        if gM[node.Val] && !gFlag {
+            num++
+            gFlag = true
+        } else if !gM[node.Val] {
+            gFlag = false
+        }
+    }
+    return num
+}
+```
