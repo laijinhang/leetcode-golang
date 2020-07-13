@@ -1,3 +1,4 @@
+＃ 1、解法一
 package main
 
 import (
@@ -56,3 +57,13 @@ func (this *MinStack) GetMin() int {
  * param_3 := obj.Top();
  * param_4 := obj.GetMin();
  */
+＃ 2、最优解
+使用一个辅助栈：push、pop、GetMin都可以以时间复杂度取到
+算法过程：
+
+入栈
+
+如果栈为空，入栈，辅助栈也入该值
+如果栈不为空，入栈，辅助栈入 min(该值,辅助栈栈顶值)
+出栈
+栈和辅助栈都出值
