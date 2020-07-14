@@ -60,10 +60,39 @@ func (this *MinStack) GetMin() int {
 ＃ 2、最优解
 使用一个辅助栈：push、pop、GetMin都可以以时间复杂度取到
 算法过程：
+1. 入栈
+    - 如果栈为空，入栈，辅助栈也入该值
+    - 如果栈不为空，入栈，辅助栈入 min(该值,辅助栈栈顶值)
+2. 出栈
+    - 栈和辅助栈都出值
 
-入栈
+type MinStack struct {
+    stack []int
+    minStack []int
+}
 
-如果栈为空，入栈，辅助栈也入该值
-如果栈不为空，入栈，辅助栈入 min(该值,辅助栈栈顶值)
-出栈
-栈和辅助栈都出值
+/** initialize your data structure here. */
+func Constructor() MinStack {
+    return MinStack{}
+}
+
+func (this *MinStack) Push(x int)  {
+    this.stack = append(this.stack, x)
+    if len(this.minStack) != 0 && x > this.minStack[len(this.minStack)-1] {
+        x = this.minStack[len(this.minStack)-1]
+    }
+    this.minStack = append(this.minStack, x)
+}
+
+func (this *MinStack) Pop() {
+    this.stack = this.stack[:len(this.stack)-1]
+    this.minStack = this.minStack[:len(this.minStack)-1]
+}
+
+func (this *MinStack) Top() int {
+    return this.stack[len(this.stack)-1]
+}
+
+func (this *MinStack) GetMin() int {
+    return this.minStack[len(this.minStack)-1]
+}
