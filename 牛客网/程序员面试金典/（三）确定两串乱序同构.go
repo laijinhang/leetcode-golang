@@ -45,7 +45,7 @@ func checkSam(str1 , str2 string) bool {
 
 func main() {
 	str1 := "est1 t"
-	str2 := "test 1"
+	str2 := "tests 1"
 	if checkSam(str1, str2) {
 		fmt.Println("True")
 	} else {
