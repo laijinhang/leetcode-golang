@@ -1,0 +1,13 @@
+[面试题 05.01. 插入](https://leetcode-cn.com/problems/insert-into-bits-lcci/)
+```go
+func insertBits(N int, M int, i int, j int) int {
+	bN := []byte(fmt.Sprintf("%0"+fmt.Sprint(j+1)+"b", N))
+	bM := []byte(fmt.Sprintf("%0"+fmt.Sprint(j+1)+"b", M))
+
+	for k := 0; k <= j-i; k++ {
+		bN[len(bN)-1-i-k] = bM[len(bM)-1-k]
+	}
+	n, _ := strconv.ParseInt(string(bN), 2, 0)
+	return int(n)
+}
+```
